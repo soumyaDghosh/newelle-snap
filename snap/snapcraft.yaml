@@ -2,6 +2,7 @@ name: newelle # you probably want to 'snapcraft register <name>'
 base: core22 # the base snap is the execution environment for this snap
 adopt-info: newelle
 version: '0.1.2.1'
+summary: A chat bot program for linux
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 
