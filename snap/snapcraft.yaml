@@ -41,6 +41,7 @@ parts:
       for i in `find $CRAFT_PART_INSTALL/meta/gui/icons -name "*.svg" -o -name "*.png"`; do
         mv $i "`dirname $i`/snap.$CRAFT_PROJECT_NAME.`basename $i`"
       done
+      chmod +x $CRAFT_PART_INSTALL/snap/newelle/current/usr/bin/newelle
     organize:
       snap/newelle/current: .
       usr/local: usr
