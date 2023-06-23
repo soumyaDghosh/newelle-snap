@@ -1,0 +1,85 @@
+name: newelle # you probably want to 'snapcraft register <name>'
+base: core22 # the base snap is the execution environment for this snap
+adopt-info: newelle
+version: '0.1.2.1'
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+parts:
+  blueprint-compiler:
+    source: https://gitlab.gnome.org/jwestman/blueprint-compiler.git
+    source-tag: 'v0.8.1'
+    plugin: meson
+    meson-parameters:
+      - --prefix=/usr
+    override-prime: ''
+  newelle:
+    after: [ blueprint-compiler ]
+    # See 'snapcraft plugins'
+    plugin: meson
+    source: https://github.com/qwersyk/Newelle.git
+    source-tag: '0.1.2.1'
+    meson-parameters: [ --prefix=/snap/newelle/current/usr ]
+    parse-info: [ usr/share/appdata/org.gnome.newelle.appdata.xml ]
+    build-snaps:
+      - webkitgtk-6-gnome-2204-sdk/latest/stable
+    build-environment:
+      - LD_LIBRARY_PATH: /snap/webkitgtk-sdk/current/usr/lib:/snap/webkitgtk-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET:/snap/webkitgtk-sdk/current/usr/lib/webkitgtk-6.0:/snap/webkitgtk-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$LD_LIBRARY_PATH
+      - PYTHONPATH: $CRAFT_STAGE/usr/lib/python3/dist-packages:$CRAFT_PART_INSTALL/usr/local/lib/python3.10/dist-packages:$PYTHONPATH
+      - GI_TYPELIB_PATH: /snap/gnome-42-2204-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:/snap/gnome-42-2204-sdk/current/usr/lib/girepository-1.0:/snap/webkitgtk-6-gnome-2204-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0
+    override-pull: |
+      craftctl default
+      patch -p1 < $CRAFT_PROJECT_DIR/newelle.patch
+    override-build: |
+      craftctl default
+      pip install --prefix=$CRAFT_PART_INSTALL/usr baichat-py==0.2.1
+      sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/usr/local/bin/*
+      sed -e '1c#!/usr/bin/env python3' -i $CRAFT_PART_INSTALL/snap/newelle/current/usr/bin/newelle
+      mkdir -p $CRAFT_PART_INSTALL/meta/gui
+      cp -r $CRAFT_PART_INSTALL/snap/newelle/current/usr/share/icons $CRAFT_PART_INSTALL/meta/gui/
+      for i in `find $CRAFT_PART_INSTALL/meta/gui/icons -name "*.svg" -o -name "*.png"`; do
+        mv $i "`dirname $i`/snap.$CRAFT_PROJECT_NAME.`basename $i`"
+      done
+    organize:
+      snap/newelle/current: .
+      usr/local: usr
+    prime:
+      - -snap/newelle
+  gst:
+    after: [ newelle ]
+    plugin: nil
+    stage-packages:
+      - gir1.2-gstreamer-1.0
+    prime:
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/Gst-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstBase-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstCheck-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstController-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstNet-1.0.typelib
+
+
+plugs:
+  webkitgtk-6-gnome-2204:
+    interface: content
+    target: $SNAP/webkitgtk-platform
+    default-provider: webkitgtk-6-gnome-2204
+
+slots:
+  newelle:
+    interface: dbus
+    bus: session
+    name: org.gnome.newelle
+apps:
+  newelle:
+    command: usr/bin/newelle
+    desktop: usr/share/applications/org.gnome.newelle.desktop
+    common-id: org.gnome.newelle
+    environment:
+      PYTHONPATH: $SNAP/usr/lib/python3.10/dist-packages:$SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
+      GI_TYPELIB_PATH: $SNAP/webkitgtk-platform/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
+      LD_LIBRARY_PATH: $SNAP/webkitgtk-platform/usr/lib/$CRAFT_ARCH_TRIPLET:$SNAP/webkitgtk-platform/usr/lib/$CRAFT_ARCH_TRIPLET/webkitgtk-6.0:$LD_LIBRARY_PATH
+    plugs:
+      - network
+      - network-bind
+      - network-status
+      - unity7
