@@ -74,6 +74,7 @@ apps:
     command: usr/bin/newelle
     desktop: usr/share/applications/org.gnome.newelle.desktop
     common-id: org.gnome.newelle
+    extensions: [ gnome ]
     environment:
       PYTHONPATH: $SNAP/usr/lib/python3.10/dist-packages:$SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
       GI_TYPELIB_PATH: $SNAP/webkitgtk-platform/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
