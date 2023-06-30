@@ -1,23 +1,23 @@
-diff -Naur a/data/org.gnome.newelle.appdata.xml.in b/data/org.gnome.newelle.appdata.xml.in
---- a/data/org.gnome.newelle.appdata.xml.in	2023-06-24 01:14:15.977033625 +0530
-+++ b/data/org.gnome.newelle.appdata.xml.in	2023-06-24 01:15:49.405964652 +0530
+diff -Naur a/data/io.github.qwersyk.Newelle.appdata.xml.in b/data/io.github.qwersyk.Newelle.appdata.xml.in
+--- a/data/io.github.qwersyk.Newelle.appdata.xml.in	2023-06-30 14:01:39.464431135 +0530
++++ b/data/io.github.qwersyk.Newelle.appdata.xml.in	2023-06-30 14:03:34.438131935 +0530
 @@ -1,6 +1,7 @@
  <?xml version="1.0" encoding="UTF-8"?>
  <component type="desktop">
- 	<id>org.gnome.newelle.desktop</id>
-+	<icon type="stock">snap.newelle.org.gnome.newelle</icon>
+ 	<id>io.github.qwersyk.Newelle.desktop</id>
++	<icon type="stock">snap.newelle.io.github.qwersyk.Newelle</icon>
  	<metadata_license>CC0-1.0</metadata_license>
  	<project_license>GPL-3.0-or-later</project_license>
- 	<description>
-diff -Naur a/data/org.gnome.newelle.desktop.in b/data/org.gnome.newelle.desktop.in
---- a/data/org.gnome.newelle.desktop.in	2023-06-24 01:14:57.236449293 +0530
-+++ b/data/org.gnome.newelle.desktop.in	2023-06-24 01:15:59.187522142 +0530
+   <name>Newelle</name>
+diff -Naur a/data/io.github.qwersyk.Newelle.desktop.in b/data/io.github.qwersyk.Newelle.desktop.in
+--- a/data/io.github.qwersyk.Newelle.desktop.in	2023-06-30 14:02:00.711910427 +0530
++++ b/data/io.github.qwersyk.Newelle.desktop.in	2023-06-30 14:03:48.465927194 +0530
 @@ -1,7 +1,7 @@
  [Desktop Entry]
  Name=newelle
  Exec=newelle
--Icon=org.gnome.newelle
-+Icon=snap.newelle.org.gnome.newelle
+-Icon=io.github.qwersyk.Newelle
++Icon=snap.newelle.io.github.qwersyk.Newelle
  Terminal=false
  Type=Application
  Categories=GTK;
