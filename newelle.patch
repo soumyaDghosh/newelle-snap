@@ -21,3 +21,15 @@ diff -Naur a/data/io.github.qwersyk.Newelle.desktop.in b/data/io.github.qwersyk.
  Terminal=false
  Type=Application
  Categories=GTK;
+diff -Naur a/src/window.py b/src/window.py
+--- a/src/window.py	2023-07-03 13:52:41.338569908 +0530
++++ b/src/window.py	2023-07-03 13:54:59.170850985 +0530
+@@ -17,7 +17,7 @@
+         self.main_program_block = Adw.Leaflet(fold_threshold_policy=True, can_navigate_back=True,
+                                               can_navigate_forward=True,
+                                               transition_type=Adw.LeafletTransitionType.UNDER)
+-        self.path = ".var/app/io.github.qwersyk.Newelle/data"
++        self.path = "snap/newelle/common/data"
+         if not os.path.exists(self.path):
+             os.makedirs(self.path)
+         self.filename = "chats.pkl"
