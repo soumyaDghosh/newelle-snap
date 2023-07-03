@@ -77,6 +77,7 @@ apps:
     common-id: io.github.qwersyk.Newelle
     extensions: [ gnome ]
     environment:
+      HOME: SNAP_REAL_HOME
       PYTHONPATH: $SNAP/usr/lib/python3.10/dist-packages:$SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
       GI_TYPELIB_PATH: $SNAP/webkitgtk-platform/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
       LD_LIBRARY_PATH: $SNAP/webkitgtk-platform/usr/lib/$CRAFT_ARCH_TRIPLET:$SNAP/webkitgtk-platform/usr/lib/$CRAFT_ARCH_TRIPLET/webkitgtk-6.0:$LD_LIBRARY_PATH

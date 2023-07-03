@@ -41,7 +41,7 @@ diff -Naur a/src/window.py b/src/window.py
                                                can_navigate_forward=True,
                                                transition_type=Adw.LeafletTransitionType.UNDER)
 -        self.path = ".var/app/io.github.qwersyk.Newelle/data"
-+        self.path = os.path.join(os.environ['SNAP_USER_COMMON'], 'data')
++        self.path = "snap/newelle/common/data"
          if not os.path.exists(self.path):
              os.makedirs(self.path)
          self.filename = "chats.pkl"
