@@ -35,13 +35,13 @@ diff -Naur a/src/gtkobj.py b/src/gtkobj.py
          text = "Done"
 diff -Naur a/src/window.py b/src/window.py
 --- a/src/window.py	2023-07-03 13:52:41.338569908 +0530
-+++ b/src/window.py	2023-07-03 15:26:18.403094351 +0530
++++ b/src/window.py	2023-07-03 15:37:06.703958970 +0530
 @@ -17,7 +17,7 @@
          self.main_program_block = Adw.Leaflet(fold_threshold_policy=True, can_navigate_back=True,
                                                can_navigate_forward=True,
                                                transition_type=Adw.LeafletTransitionType.UNDER)
 -        self.path = ".var/app/io.github.qwersyk.Newelle/data"
-+        self.path = "snap/newelle/common/data"
++        self.path = os.path.join(os.environ['SNAP_USER_COMMON'], 'data')
          if not os.path.exists(self.path):
              os.makedirs(self.path)
          self.filename = "chats.pkl"
