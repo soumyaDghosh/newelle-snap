@@ -21,9 +21,21 @@ diff -Naur a/data/io.github.qwersyk.Newelle.desktop.in b/data/io.github.qwersyk.
  Terminal=false
  Type=Application
  Categories=GTK;
+diff -Naur a/src/gtkobj.py b/src/gtkobj.py
+--- a/src/gtkobj.py	2023-07-03 15:22:45.610854183 +0530
++++ b/src/gtkobj.py	2023-07-03 15:26:51.803675518 +0530
+@@ -151,7 +151,7 @@
+     def run_python(self, widget):
+         self.text_expander.set_visible(True)
+         t = self.txt.replace("'", '"""')
+-        process = subprocess.Popen(f"""flatpak-spawn --host python3 -c '{t}'""", stdout=subprocess.PIPE,
++        process = subprocess.Popen(f"""python3 -c '{t}'""", stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE, shell=True)
+         stdout, stderr = process.communicate()
+         text = "Done"
 diff -Naur a/src/window.py b/src/window.py
 --- a/src/window.py	2023-07-03 13:52:41.338569908 +0530
-+++ b/src/window.py	2023-07-03 13:54:59.170850985 +0530
++++ b/src/window.py	2023-07-03 15:26:18.403094351 +0530
 @@ -17,7 +17,7 @@
          self.main_program_block = Adw.Leaflet(fold_threshold_policy=True, can_navigate_back=True,
                                                can_navigate_forward=True,
@@ -33,3 +45,12 @@ diff -Naur a/src/window.py b/src/window.py
          if not os.path.exists(self.path):
              os.makedirs(self.path)
          self.filename = "chats.pkl"
+@@ -753,8 +753,6 @@
+     def execute_terminal_command(self, command):
+         os.chdir(os.path.expanduser(self.main_path))
+         console_permissions = ""
+-        if not self.virtualization:
+-            console_permissions = "flatpak-spawn --host "
+         process = subprocess.Popen(console_permissions + '\n'.join(command), stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE, shell=True)
+         stdout, stderr = process.communicate()
